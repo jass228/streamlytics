@@ -16,6 +16,8 @@ Streamlytics est un projet de pipeline ETL (Extraction, Transformation, Chargeme
 
 ## Technologies utilisées
 
+### Backend & ETL
+
 - Orchestrateur : Apache Airflow
 - Langage : Python
 - Bases de données : PostgreSQL et MongoDB
@@ -24,6 +26,13 @@ Streamlytics est un projet de pipeline ETL (Extraction, Transformation, Chargeme
   - pandas pour la transformation des données.
   - requests pour les appels API.
   - matplotlib et seaborn pour les visualisations.
+  - FastAPI
+
+### Frontend
+
+- NextJS
+- TailwindCSS
+- Recharts/Chart.js
 
 ## Installation
 
