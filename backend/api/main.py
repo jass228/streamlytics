@@ -4,9 +4,9 @@ Description:  Main FastAPI application for the Streamlytics API, handling movies
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+#pylint: disable = E0401:import-error
 from config.db import database
-from routes.movies import router as movies_router
-from routes.series import router as series_router
+from routers import movies, series, statistics
 
 app = FastAPI(
     title="Streamlytics API",
@@ -44,8 +44,9 @@ async def shutdown():
         raise e
 
 # Include routers
-app.include_router(movies_router)
-app.include_router(series_router)
+app.include_router(movies.router, prefix="/api", tags=["Movies"])
+app.include_router(series.router, prefix="/api", tags=["Series"])
+app.include_router(statistics.router, prefix="/api/stats", tags=["Statistics"])
 
 # API Root
 @app.get('/')

@@ -1,14 +1,14 @@
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import Main from "@/components/Main";
-import { ThemeProvider } from "@/context/ThemeContext";
+import Image from "next/image";
 
 export default function Home() {
   return (
-    <ThemeProvider>
-      <div className="min-h-screen bg-gray-100 dark:bg-netflix-dark dark:text-white transition-colors duration-200">
-        <Header />
-        <Main />
-      </div>
-    </ThemeProvider>
+    <div className="min-h-screen bg-[#ffe3dd] dark:bg-background dark:text-white transition-colors duration-200">
+      <Header />
+      <Main />
+      <Footer />
+    </div>
   );
 }

@@ -3,6 +3,7 @@
 Description: FastAPI router for handling series-related endpoints.
 """
 from fastapi import APIRouter, HTTPException
+#pylint: disable = E0401:import-error
 from config.db import database
 
 router = APIRouter()
