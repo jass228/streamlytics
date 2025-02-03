@@ -10,7 +10,6 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import countries from "../../data/world_countries.json";
 import { Minus, Move, Plus, RefreshCw } from "lucide-react";
 
-// Predefined regions with zoom parameters
 const REGIONS = {
   WORLD: { position: [0.5, 0.5], zoom: 100, rotation: [0, 0, 0] },
   EUROPE: { position: [0.6, 0.4], zoom: 250, rotation: [0, 0, 0] },
@@ -27,6 +26,8 @@ interface LanguageMapProps {
 
 const LanguageMap = ({ media }: LanguageMapProps) => {
   const { theme } = useTheme();
+
+  // States
   const [movieData, setMovieData] = useState<APIDistributionResponse | null>(
     null
   );
@@ -34,7 +35,6 @@ const LanguageMap = ({ media }: LanguageMapProps) => {
     null
   );
   const [isLoading, setIsLoading] = useState(true);
-
   const [zoom, setZoom] = useState(REGIONS.WORLD.zoom);
   const [position, setPosition] = useState({
     x: REGIONS.WORLD.position[0],
@@ -45,41 +45,24 @@ const LanguageMap = ({ media }: LanguageMapProps) => {
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
   const [selectedRegion, setSelectedRegion] = useState("WORLD");
 
-  // Zoom management
+  // Callbacks
   const handleZoom = useCallback((delta: number) => {
-    setZoom((prevZoom) => {
-      const newZoom = Math.max(50, Math.min(400, prevZoom + delta));
-      return newZoom;
-    });
+    setZoom((prevZoom) => Math.max(50, Math.min(400, prevZoom + delta)));
   }, []);
 
-  // Wheel management
   const handleWheel = useCallback(
     (event: { preventDefault: () => void; deltaY: number }) => {
       event.preventDefault();
-      const delta = -event.deltaY * 0.5;
-      handleZoom(delta);
+      handleZoom(-event.deltaY * 0.5);
     },
     [handleZoom]
   );
 
-  useEffect(() => {
-    const element = document.getElementById("map-container");
-    if (element) {
-      element.addEventListener("wheel", handleWheel, { passive: false });
-      return () => element.removeEventListener("wheel", handleWheel);
-    }
-  }, [handleWheel]);
-
-  // Travel management
   const handleMouseDown = useCallback(
     (event: { preventDefault: () => void; clientX: any; clientY: any }) => {
       event.preventDefault();
       setIsDragging(true);
-      setDragStart({
-        x: event.clientX,
-        y: event.clientY,
-      });
+      setDragStart({ x: event.clientX, y: event.clientY });
     },
     []
   );
@@ -92,16 +75,13 @@ const LanguageMap = ({ media }: LanguageMapProps) => {
     }) => {
       if (!isDragging) return;
       event.preventDefault();
-
-      const sensitivity = 0.005; // Adjust this value to modify displacement sensitivity
+      const sensitivity = 0.005;
       const dx = (event.clientX - dragStart.x) * sensitivity;
       const dy = (event.clientY - dragStart.y) * sensitivity;
-
       setPosition((prev) => ({
         x: prev.x - dx,
         y: prev.y - dy,
       }));
-
       setDragStart({
         x: event.clientX,
         y: event.clientY,
@@ -114,34 +94,67 @@ const LanguageMap = ({ media }: LanguageMapProps) => {
     setIsDragging(false);
   }, []);
 
-  // Navigation to regions
-  const navigateToRegion = (regionKey: keyof typeof REGIONS) => {
-    const region = REGIONS[regionKey];
-    setSelectedRegion(regionKey);
-    setZoom(region.zoom);
-    setPosition({ x: region.position[0], y: region.position[1] });
-    setRotation(region.rotation);
-  };
+  // Memos
+  const movieCountryData = useMemo(
+    () =>
+      movieData
+        ? Object.entries(movieData.data).map(([country, value]) => ({
+            id: country,
+            value,
+          }))
+        : [],
+    [movieData]
+  );
 
-  // Fetch Data
-  const fetchData = async () => {
-    try {
-      const [movies, series] = await Promise.all([
-        fetchMovieCountryDistribution(),
-        fetchSerieCountryDistribution(),
-      ]);
-      setMovieData(movies);
-      setSerieData(series);
-    } catch (error) {
-      console.error("Error loading data:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const serieCountryData = useMemo(
+    () =>
+      serieData
+        ? Object.entries(serieData.data).map(([country, value]) => ({
+            id: country,
+            value,
+          }))
+        : [],
+    [serieData]
+  );
 
+  const domain = useMemo(() => {
+    if (!movieCountryData.length) return [0, 0];
+    const values = movieCountryData.map((d) => d.value);
+    return [Math.min(...values), Math.max(...values)];
+  }, [movieCountryData]);
+
+  const domainSeries = useMemo(() => {
+    if (!serieCountryData.length) return [0, 0];
+    const values = serieCountryData.map((d) => d.value);
+    return [Math.min(...values), Math.max(...values)];
+  }, [serieCountryData]);
+
+  // Effects
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [movies, series] = await Promise.all([
+          fetchMovieCountryDistribution(),
+          fetchSerieCountryDistribution(),
+        ]);
+        setMovieData(movies);
+        setSerieData(series);
+      } catch (error) {
+        console.error("Error loading data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const element = document.getElementById("map-container");
+    if (element) {
+      element.addEventListener("wheel", handleWheel, { passive: false });
+      return () => element.removeEventListener("wheel", handleWheel);
+    }
+  }, [handleWheel]);
 
   if (isLoading || !movieData || !serieData) {
     return (
@@ -151,44 +164,17 @@ const LanguageMap = ({ media }: LanguageMapProps) => {
     );
   }
 
-  const movieCountryData = movieData
-    ? Object.entries(movieData.data).map(([country, value]) => ({
-        id: country,
-        value,
-      }))
-    : [];
-
-  const serieCountryData = serieData
-    ? Object.entries(serieData.data).map(([country, value]) => ({
-        id: country,
-        value,
-      }))
-    : [];
-
-  const domain = useMemo(() => {
-    const values = movieCountryData.map((d) => d.value);
-    return [Math.min(...values), Math.max(...values)];
-  }, [movieCountryData]);
+  // Helpers
+  const navigateToRegion = (regionKey: keyof typeof REGIONS) => {
+    const region = REGIONS[regionKey];
+    setSelectedRegion(regionKey);
+    setZoom(region.zoom);
+    setPosition({ x: region.position[0], y: region.position[1] });
+    setRotation(region.rotation);
+  };
 
   return (
     <div className="relative w-full h-[calc(100vh-4rem)] min-h-[400px] max-h-[600px]">
-      {/*<div className="flex flex-wrap gap-2">
-        {Object.keys(REGIONS).map((region) => (
-          <button
-            key={region}
-            onClick={() => navigateToRegion(region)}
-            className={`px-3 py-1 rounded-full transition-colors ${
-              selectedRegion === region
-                ? "bg-blue-500 text-white"
-                : "bg-gray-100 hover:bg-gray-200"
-            }`}
-          >
-            {region.replace("_", " ")}
-          </button>
-        ))}
-      </div>}*}
-
-      {/* Card container with drag management */}
       <div
         id="map-container"
         className="relative h-[600px] cursor-grab active:cursor-grabbing"
@@ -197,7 +183,6 @@ const LanguageMap = ({ media }: LanguageMapProps) => {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       >
-        {/*Zoom controls */}
         <div className="absolute right-4 top-4 z-10 flex flex-col gap-2">
           <button
             onClick={() => handleZoom(20)}
@@ -231,7 +216,7 @@ const LanguageMap = ({ media }: LanguageMapProps) => {
           features={countries.features}
           margin={{ top: 0, right: 0, bottom: 0, left: 0 }}
           colors="nivo"
-          domain={domain}
+          domain={media === "movie" ? domain : domainSeries}
           unknownColor={theme === "dark" ? "#ffefe4" : "#001e35"}
           label="properties.name"
           valueFormat=".0s"
