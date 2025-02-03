@@ -1,129 +1,152 @@
 # Streamlytics
 
-Streamlytics est un projet de pipeline ETL (Extraction, Transformation, Chargement) conçu pour analyser et explorer le catalogue Netflix à l'aide des données provenant de l'API TMDB. Ce projet vise à fournir des insights analytiques riches sur les films et séries disponibles sur Netflix, tels que les genres dominants, les scores moyens et les tendances de production.
+**Streamlytics** is an [ETL](https://fr.wikipedia.org/wiki/Extract-transform-load) (Extract, Transform, Load) pipeline project designed to analyze and explore the Netflix catalogue using data from the [TMDB API](https://developer.themoviedb.org/reference/intro/getting-started).  
+This project aims to provide rich analytical insights into the films and series available on Netflix, such as dominant genres, average scores and production trends.
 
-## Caractéristiques principales
+## 📖 Table of Contents
 
-- **Extraction des données** depuis l'API TMDB sur les films et séries disponibles sur Netflix.
-- **Transformation des données**: nettoyage, enrichissement, et organisation des informations clés.
-- **Chargement des données** dans des bases de données :
-  - **PostgreSQL** pour des analyses structurées.
-  - **MongoDB** pour une flexibilité supplémentaire avec des documents JSON.
-- **Rapports analytiques** sur le catalogue Netflix :
-  - Répartition des genres.
-  - Scores moyens des films et séries.
-  - Distribution des langues et des dates de sortie.
+- [Streamlytics](#streamlytics)
+  - [📖 Table of Contents](#-table-of-contents)
+  - [🏗️ Project Architecture](#️-project-architecture)
+  - [🚀 Tech Stack](#-tech-stack)
+    - [Backend \& ETL](#backend--etl)
+    - [Frontend](#frontend)
+  - [📦 Installation](#-installation)
+    - [Prerequisites](#prerequisites)
+    - [Backend](#backend)
+      - [Database](#database)
+      - [Airflow](#airflow)
+  - [💻 Usage](#-usage)
+  - [📂 Project Structure](#-project-structure)
+  - [📊 Demo](#-demo)
+  - [](#)
+  - [📜 License](#-license)
+  - [📩 Contact \& Support](#-contact--support)
 
-## Technologies utilisées
+## 🏗️ Project Architecture
+
+![Architecture Diagram](./asset/img/streamlytics_architecture.png)
+
+1. **ETL with Airflow**: Extracts data from the TMDB API, processes it, and stores it in PostgreSQL & MongoDB.
+2. **Databases**:
+   - PostgreSQL: Stores processed analytical data.
+   - MongoDB: Holds raw JSON data for flexibility.
+3. **FastAPI Backend**: Provides RESTful API endpoints for data access.
+4. **Next.js Frontend**: Displays interactive visualizations and dashboards.
+5. **Statistical Analysis**: Runs daily and stores results for performance optimization.
+
+## 🚀 Tech Stack
 
 ### Backend & ETL
 
-- Orchestrateur : Apache Airflow
-- Langage : Python
-- Bases de données : PostgreSQL et MongoDB
-- API : TMDB (The Movie Database)
-- Bibliothèques Python :
-  - pandas pour la transformation des données.
-  - requests pour les appels API.
-  - matplotlib et seaborn pour les visualisations.
-  - FastAPI
+- ETL : [Apache Airflow](https://airflow.apache.org) 2.0+
+- API : [FastAPI](https://fastapi.tiangolo.com)
+- Databases : PostgreSQL 17.2+, MongoDB 8.0+
+- Python 3.9+
 
 ### Frontend
 
 - NextJS
 - TailwindCSS
-- Recharts/Chart.js
+- Chart.js
+- Nivo
 
-## Installation
+## 📦 Installation
 
-### 1. Prérequis
-
-- Python 3.8 ou supérieur
-- Apache Airflow 2.0 ou supérieur
-- PostgreSQL (version recommandée : 13+)
-- MongoDB (version recommandée : 5+)
-- Compte API TMDB (obtenez une clé API depuis TMDB)
-
-### 2. Installation des dépendances
-
-Cloner ce dépôt et installer les dépendances requises:
+### Prerequisites
 
 ```bash
-git clone https://github.com/votre-utilisateur/streamlytics.git
-cd streamlytics
+python >= 3.9
+postgresql >= 17.2
+mongodb >= 8.0
+node >= 18
+```
+
+- TMDB API account (obtain an API key from [TMDB](https://developer.themoviedb.org/))
+
+### Backend
+
+```bash
+# Clone & Install
+git clone https://github.com/jass228/streamlytics.git
+cd streamlytics/backend
 pip install -r requirements.txt
 ```
 
-### 3. Configuration
+#### Database
 
-1. Configurer la base de données PostgreSQL :
-   - Créez une base de données nommée streamlytics.
-   - Configurez l'utilisateur et le mot de passe dans le fichier config.py.
-2. Configurer MongoDB :
-   - Assurez-vous que MongoDB est en cours d'exécution et configurez les détails de connexion dans config.py.
-3. Ajoutez votre clé API TMDB dans le fichier .env :
+1. PostgreSQL: Create a database named `streamlytics`.
+2. MongoDB: Ensure MongoDB is running.
+3. Add your TMDB API key to .env:
 
-```bash
-TMDB_API_KEY=[votre_cle_api]
-```
-
-### 4. Démarrer Airflow
-
-Initialisez et démarrez le scheduler et le webserver d'Airflow :
+#### Airflow
 
 ```bash
+export AIRFLOW_HOME=./airflow
 airflow db init
-airflow users create --username admin --password admin --firstname Admin --lastname User --role Admin --email admin@example.com
-airflow webserver
-airflow scheduler
+airflow users create --username admin --password admin --role Admin --email admin@example.com
+airflow scheduler & airflow webserver
 ```
 
-Ajoutez ensuite le DAG du pipeline ETL en copiant les fichiers dans le dossier dags/.
+Then activate and trigger the DAG in the Airflow UI (http://localhost:8080).
 
-## Utilisation
+## 💻 Usage
 
-1. Exécuter le pipeline
+1. Run the ETL Pipeline
 
-- Ouvrez l'interface Airflow (par défaut sur http://localhost:8080).
-- Activez et déclenchez le DAG streamlytics_etl.
+   - Open Airflow at http://localhost:8080
+   - Activate and run the etl_tmdb_netflix DAG
 
-2. Visualiser les données
+2. Access Processed Data
 
-- Utilisez un outil comme pgAdmin ou Mongo Compass pour explorer les données dans PostgreSQL et MongoDB.
-- Pour les rapports analytiques, exécutez les notebooks disponibles dans le dossier reports/.
+   - PostgreSQL: Use pgAdmin to explore stored data.
+   - MongoDB: Use Mongo Compass to inspect raw JSON data.
 
-## Structure du projet
+3. Start the Backend API
+
+```bash
+cd backend/api
+uvicorn main:app --reload
+
+```
+
+- API Documentation: http://127.0.0.1:8000/docs
+
+4. Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+- Visit: http://localhost:3000
+
+## 📂 Project Structure
 
 ```plaintext
 streamlytics/
-│
-├── dags/               # Fichiers du pipeline ETL pour Airflow
-├── data/               # Données brutes (optionnel)
-├── reports/            # Notebooks pour les analyses et visualisations
-├── config.py           # Configuration des bases de données et API
-├── requirements.txt    # Dépendances Python
-├── README.md           # Documentation du projet
-└── .env                # Fichier pour les variables d'environnement
+│── backend/                      # FastAPI Backend
+│   ├── airflow/                   # ETL pipeline with Apache Airflow
+│   ├── api/                       # FastAPI server
+│   ├── stats/                      # Data analysis
+│── frontend/                      # Next.js Frontend
+│── .env                            # Environment variables
+│── README.md                       # Project documentation
+
 ```
 
-## Exemples de rapports analytiques
+## 📊 Demo
 
-### Répartition des genres
+## ![image info](./asset/img/demo.jpg)
 
-Un graphique circulaire montrant la proportion des genres dominants dans le catalogue Netflix.
+![image info](./asset/gif/demo.gif)
 
-### Scores moyens par année
+## 📜 License
 
-Une ligne temporelle illustrant l'évolution des scores moyens des contenus Netflix au fil des années.
+This project is licensed under the MIT License.
 
-### Distribution des langues
+## 📩 Contact & Support
 
-Un diagramme à barres représentant les langues principales utilisées dans les films et séries Netflix.
-
-## Contributeurs
-
-- jass228
-
-## Licence
-
-Ce projet est sous licence
+👨‍💻 Author: Joseph A.  
+📌 Feel free to open an issue for questions or suggestions!
