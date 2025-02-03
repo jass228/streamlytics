@@ -104,7 +104,7 @@ df_tv_copy = get_year(df_tv_copy)
 
 # Generate distributions and ratings
 # Distribution of media by country
-country_movies_distribution, country_series_distribution = get_distribution(df_tv, df_movie, 'country_name')
+country_movies_distribution, country_series_distribution = get_distribution(df_tv, df_movie, 'country_code_3')
 # Analysis of media genres
 genres_movies_distribution, genres_series_distribution = get_distribution(df_tv, df_movie, 'genre')
 # Media releases over time

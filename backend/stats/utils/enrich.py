@@ -35,6 +35,22 @@ def convert_country_code_to_name(country_code:str):
     except KeyError:
         return country_code
 
+def convert_country_code_to_3(country_code:str):
+    """Convert a two-letter country code to its three-letter country code.
+
+    Args:
+        country_code (str): Two-letter ISO 3166-1 alpha-2 country code
+
+    Returns:
+        str: Three-letter of the country code, or:
+            - Original code if country cannot be found
+    """
+    try:
+        country = pycountry.countries.get(alpha_2=country_code)
+        return country.alpha_3 if country else None
+    except KeyError:
+        return country_code
+
 def get_media_origin_country(tmdb_id: int, media: str):
     """Fetch origin country information for a media item from TMDB API.
 
@@ -43,10 +59,11 @@ def get_media_origin_country(tmdb_id: int, media: str):
         media (str): Type of media ('movie' or 'tv')
 
     Returns:
-        tuple: A pair of (country_codes, country_names) where:
+        tuple: A pair of (country_codes, country_code_3, country_names) where:
             - country_codes (str): Comma-separated list of country codes
+            - country_codes_3 (str): Comma-separated list of country codes
             - country_names (str): Comma-separated list of country names
-            - Returns (None, None) if no country information is found
+            - Returns (None, None, None) if no country information is found
     """
     params = {
         'api_key': TMDB_API_KEY,
@@ -64,13 +81,15 @@ def get_media_origin_country(tmdb_id: int, media: str):
 
     if origin_countries:
         country_codes = origin_countries
+        country_code_3 = [convert_country_code_to_3(code) for code in origin_countries]
         country_names = [convert_country_code_to_name(code) for code in origin_countries]
 
         country_codes_str = ", ".join(country_codes)
         country_names_str = ", ".join(country_names)
+        country_code_3_str = ", ".join(country_code_3)
 
-        return country_codes_str, country_names_str
-    return None, None
+        return country_codes_str, country_code_3_str, country_names_str
+    return None, None, None
 
 def enrich_dataframe(df:pd.DataFrame, media:str):
     """Enrich a DataFrame with country information for each media item.
@@ -82,14 +101,17 @@ def enrich_dataframe(df:pd.DataFrame, media:str):
     Returns:
         pd.DataFrame: Enriched DataFrame with additional columns:
             - country_code: Comma-separated list of country codes
+            - country_code_3: Comma-separated list of country codes
             - country_name: Comma-separated list of country names
     """
     df['country_code'] = None
+    df['country_code_3'] = None
     df['country_name'] = None
 
     for idx, row in tqdm(df.iterrows(), total=df.shape[0], desc=f"Processing {media}"):
-        country_code, country_name = get_media_origin_country(row['tmdb_id'], media)
+        country_code, country_code_3, country_name = get_media_origin_country(row['tmdb_id'], media)
         df.at[idx, 'country_code'] = country_code
+        df.at[idx, 'country_code_3'] = country_code_3
         df.at[idx, 'country_name'] = country_name
 
     return df
