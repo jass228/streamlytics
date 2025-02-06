@@ -14,6 +14,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  icons: {
+    icon: "/favicon.png",
+  },
   title: "Streamlytics",
   description: "Analytics dashboard for Netflix data",
 };
