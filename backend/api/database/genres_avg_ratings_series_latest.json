@@ -1,0 +1,46 @@
+{
+  "data": {
+    "Science-Fiction & Fantastique": {
+      "mean": 8.14,
+      "count": 36
+    },
+    "Action & Adventure": {
+      "mean": 8.12,
+      "count": 45
+    },
+    "Comédie": {
+      "mean": 8.1,
+      "count": 36
+    },
+    "Drame": {
+      "mean": 8.09,
+      "count": 70
+    },
+    "Mystère": {
+      "mean": 8.04,
+      "count": 18
+    },
+    "Crime": {
+      "mean": 8.03,
+      "count": 19
+    },
+    "Animation": {
+      "mean": 7.98,
+      "count": 37
+    },
+    "Familial": {
+      "mean": 7.63,
+      "count": 8
+    },
+    "Kids": {
+      "mean": 7.4,
+      "count": 9
+    },
+    "Reality": {
+      "mean": 7.2,
+      "count": 3
+    }
+  },
+  "total_ratings": 281,
+  "average_rating": 7.87
+}

@@ -1,0 +1,66 @@
+{
+  "data": {
+    "Histoire": {
+      "mean": 7.6,
+      "count": 6
+    },
+    "Guerre": {
+      "mean": 7.59,
+      "count": 5
+    },
+    "Animation": {
+      "mean": 7.31,
+      "count": 17
+    },
+    "Science-Fiction": {
+      "mean": 7.28,
+      "count": 23
+    },
+    "Fantastique": {
+      "mean": 7.24,
+      "count": 16
+    },
+    "Drame": {
+      "mean": 7.24,
+      "count": 34
+    },
+    "Aventure": {
+      "mean": 7.18,
+      "count": 32
+    },
+    "Romance": {
+      "mean": 7.16,
+      "count": 16
+    },
+    "Familial": {
+      "mean": 7.13,
+      "count": 15
+    },
+    "Crime": {
+      "mean": 7.05,
+      "count": 20
+    },
+    "Comédie": {
+      "mean": 7.01,
+      "count": 31
+    },
+    "Action": {
+      "mean": 6.99,
+      "count": 46
+    },
+    "Thriller": {
+      "mean": 6.85,
+      "count": 24
+    },
+    "Horreur": {
+      "mean": 6.3,
+      "count": 5
+    },
+    "Mystère": {
+      "mean": 6.13,
+      "count": 4
+    }
+  },
+  "total_ratings": 294,
+  "average_rating": 7.07
+}

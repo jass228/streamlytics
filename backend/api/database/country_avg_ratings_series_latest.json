@@ -1,0 +1,30 @@
+{
+  "data": {
+    "Japan": {
+      "mean": 8.21,
+      "count": 24
+    },
+    "South Korea": {
+      "mean": 8.17,
+      "count": 9
+    },
+    "United States": {
+      "mean": 8.06,
+      "count": 57
+    },
+    "Colombia": {
+      "mean": 7.71,
+      "count": 3
+    },
+    "United Kingdom": {
+      "mean": 7.62,
+      "count": 8
+    },
+    "France": {
+      "mean": 6.93,
+      "count": 3
+    }
+  },
+  "total_ratings": 104,
+  "average_rating": 7.78
+}

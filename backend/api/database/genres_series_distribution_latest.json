@@ -1,0 +1,18 @@
+{
+  "data": {
+    "Drame": 70,
+    "Action & Adventure": 45,
+    "Animation": 37,
+    "Comédie": 36,
+    "Science-Fiction & Fantastique": 36,
+    "Crime": 19,
+    "Mystère": 18,
+    "Kids": 9,
+    "Familial": 8,
+    "Reality": 3,
+    "War & Politics": 2,
+    "Western": 1
+  },
+  "total": 284,
+  "count": 12
+}

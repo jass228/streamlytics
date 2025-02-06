@@ -1,0 +1,23 @@
+{
+  "data": {
+    "Action": 46,
+    "Drame": 34,
+    "Aventure": 32,
+    "Comédie": 31,
+    "Thriller": 24,
+    "Science-Fiction": 23,
+    "Crime": 20,
+    "Animation": 17,
+    "Romance": 16,
+    "Fantastique": 16,
+    "Familial": 15,
+    "Histoire": 6,
+    "Guerre": 5,
+    "Horreur": 5,
+    "Mystère": 4,
+    "Musique": 1,
+    "Documentaire": 1
+  },
+  "total": 296,
+  "count": 17
+}

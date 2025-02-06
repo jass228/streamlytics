@@ -11,7 +11,7 @@ class StatisticsService:
     """Service class that provides methods to read and parse statistical data from JSON files.
     """
     def __init__(self):
-        self.base_path = os.path.join("..", "stats", "db", "api", "latest")
+        self.base_path = os.path.join("..", "stats", "database")
 
     async def get_json_data(self, filename: str):
         """Read and return data from a JSON file.
