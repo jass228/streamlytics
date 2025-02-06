@@ -3,6 +3,17 @@ import React, { useEffect, useState } from "react";
 import { API_ENDPOINTS } from "@/config/api";
 import { StreamlyticsContent } from "@/types/api";
 
+interface RawContentItem {
+  genre: string | string[];
+  tmdb_id: number;
+  poster_path: string;
+  title: string;
+  release_date?: string;
+  first_air_date?: string;
+  rating: number;
+  original_language: string;
+}
+
 interface RecentContentProps {
   endpoint: string;
 }
@@ -22,7 +33,7 @@ const RecentContent = ({ endpoint }: RecentContentProps) => {
 
       // Transform the data to match our interface
       const validatedData = data
-        .map((item: any) => ({
+        .map((item: RawContentItem) => ({
           ...item,
           genre:
             typeof item.genre === "string"
@@ -50,6 +61,14 @@ const RecentContent = ({ endpoint }: RecentContentProps) => {
   useEffect(() => {
     getData();
   }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-[300px]">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">

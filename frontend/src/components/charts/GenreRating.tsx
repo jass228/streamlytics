@@ -13,6 +13,10 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import {
+  NameType,
+  ValueType,
+} from "recharts/types/component/DefaultTooltipContent";
 
 /*const data = [
   { genre: "Action", rating: 7.2 },
@@ -24,6 +28,13 @@ import {
 
 interface GenreRatingProps {
   media: string;
+}
+
+interface TooltipPayload {
+  payload?: {
+    count: number;
+    rating: number;
+  };
 }
 
 const GenreRating = ({ media }: GenreRatingProps) => {
@@ -98,12 +109,16 @@ const GenreRating = ({ media }: GenreRatingProps) => {
               borderRadius: "var(--radius)",
             }}
             labelFormatter={(label) => `${label}`}
-            formatter={(value, name, item: any) => {
+            formatter={(
+              value: ValueType,
+              name: NameType,
+              items: TooltipPayload
+            ) => {
               const content = (
                 <>
                   Rating: {value}
                   <br />
-                  Count: {item.payload.count}
+                  Count: {items.payload?.count}
                 </>
               );
               return [content];

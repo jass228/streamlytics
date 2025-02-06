@@ -40,10 +40,12 @@ const LanguageMap = ({ media }: LanguageMapProps) => {
     x: REGIONS.WORLD.position[0],
     y: REGIONS.WORLD.position[1],
   });
-  const [rotation, setRotation] = useState(REGIONS.WORLD.rotation);
+  const [rotation, setRotation] = useState<[number, number, number]>(
+    REGIONS.WORLD.rotation as [number, number, number]
+  );
   const [isDragging, setIsDragging] = useState(false);
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [selectedRegion, setSelectedRegion] = useState("WORLD");
+  const [, setSelectedRegion] = useState("WORLD");
 
   // Callbacks
   const handleZoom = useCallback((delta: number) => {
@@ -59,7 +61,11 @@ const LanguageMap = ({ media }: LanguageMapProps) => {
   );
 
   const handleMouseDown = useCallback(
-    (event: { preventDefault: () => void; clientX: any; clientY: any }) => {
+    (event: {
+      preventDefault: () => void;
+      clientX: number;
+      clientY: number;
+    }) => {
       event.preventDefault();
       setIsDragging(true);
       setDragStart({ x: event.clientX, y: event.clientY });
@@ -170,7 +176,7 @@ const LanguageMap = ({ media }: LanguageMapProps) => {
     setSelectedRegion(regionKey);
     setZoom(region.zoom);
     setPosition({ x: region.position[0], y: region.position[1] });
-    setRotation(region.rotation);
+    setRotation(region.rotation as [number, number, number]);
   };
 
   return (

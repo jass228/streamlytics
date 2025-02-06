@@ -4,7 +4,6 @@ import {
   fetchSerieGenreDistribution,
 } from "@/lib/api";
 import { APIDistributionResponse } from "@/types/api";
-import { useTheme } from "next-themes";
 import React, { useEffect, useState } from "react";
 import PieVisualization from "./PieVisualization";
 
@@ -14,7 +13,7 @@ import PieVisualization from "./PieVisualization";
   { name: "Comédie", value: 987 },
   { name: "Documentaire", value: 456 },
   { name: "Thriller", value: 678 },
-];*/
+];
 
 const COLORS = [
   "hsl(var(--chart-1))",
@@ -22,14 +21,14 @@ const COLORS = [
   "hsl(var(--chart-3))",
   "hsl(var(--chart-4))",
   "hsl(var(--chart-5))",
-];
+];*/
 
 interface GenreDistributionProps {
   media: string;
 }
 
 const GenreDistribution = ({ media }: GenreDistributionProps) => {
-  const { theme } = useTheme();
+  //const { theme } = useTheme();
   const [movieData, setMovieData] = useState<APIDistributionResponse | null>(
     null
   );
