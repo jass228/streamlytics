@@ -5,7 +5,6 @@ Description:  Main FastAPI application for the Streamlytics API, handling movies
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 #pylint: disable = E0401:import-error
-from config.db import database
 from routers import movies, series, statistics
 
 app = FastAPI(
@@ -22,26 +21,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-@app.on_event('startup')
-async def startup():
-    """Connect to the database when the application starts
-    """
-    try:
-        await database.connect()
-    except Exception as e:
-        print(f"Failed to connect to database: {e}")
-        raise e
-
-@app.on_event('shutdown')
-async def shutdown():
-    """Disconnect from the database when the application shuts down
-    """
-    try:
-        await database.disconnect()
-    except Exception as e:
-        print(f"Error during database disconnect: {e}")
-        raise e
 
 # Include routers
 app.include_router(movies.router, prefix="/api", tags=["Movies"])
