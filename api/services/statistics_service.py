@@ -2,6 +2,7 @@
 @author: Joseph A.
 Description: Service class for handling statistical data operations from Supabase
 """
+import json
 import dataclasses
 from config.db import database
 
@@ -55,4 +56,8 @@ class StatisticsService:
         if result is None:
             raise ValueError(f"No data found for {stat_type}/{media_type}")
 
-        return result["data"]
+        data = result["data"]
+        # Parse JSON if data is a string (JSONB might be returned as string)
+        if isinstance(data, str):
+            return json.loads(data)
+        return data
