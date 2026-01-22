@@ -1,152 +1,178 @@
 # Streamlytics
 
-**Streamlytics** is an [ETL](https://fr.wikipedia.org/wiki/Extract-transform-load) (Extract, Transform, Load) pipeline project designed to analyze and explore the Netflix catalogue using data from the [TMDB API](https://developer.themoviedb.org/reference/intro/getting-started).  
+**Streamlytics** is an [ETL](https://fr.wikipedia.org/wiki/Extract-transform-load) (Extract, Transform, Load) pipeline project designed to analyze and explore the Netflix catalogue using data from the [TMDB API](https://developer.themoviedb.org/reference/intro/getting-started).
 This project aims to provide rich analytical insights into the films and series available on Netflix, such as dominant genres, average scores and production trends.
 
-## 📖 Table of Contents
+## Table of Contents
 
 - [Streamlytics](#streamlytics)
-  - [📖 Table of Contents](#-table-of-contents)
-  - [🏗️ Project Architecture](#️-project-architecture)
-  - [🚀 Tech Stack](#-tech-stack)
+  - [Table of Contents](#table-of-contents)
+  - [Project Architecture](#project-architecture)
+  - [Tech Stack](#tech-stack)
     - [Backend \& ETL](#backend--etl)
     - [Frontend](#frontend)
-  - [📦 Installation](#-installation)
+  - [Installation](#installation)
     - [Prerequisites](#prerequisites)
-    - [Backend](#backend)
-      - [Database](#database)
-      - [Airflow](#airflow)
-  - [💻 Usage](#-usage)
-  - [📂 Project Structure](#-project-structure)
-  - [📊 Demo](#-demo)
-  - [](#)
-  - [📜 License](#-license)
-  - [📩 Contact \& Support](#-contact--support)
+    - [API](#api)
+    - [ETL](#etl)
+    - [Frontend](#frontend-1)
+  - [Usage](#usage)
+    - [1. Run the ETL Pipeline](#1-run-the-etl-pipeline)
+    - [2. Generate Statistics](#2-generate-statistics)
+    - [3. Start the API](#3-start-the-api)
+    - [4. Start the Frontend](#4-start-the-frontend)
+  - [Project Structure](#project-structure)
+  - [Demo](#demo)
+  - [License](#license)
+  - [Contact \& Support](#contact--support)
 
-## 🏗️ Project Architecture
+## Project Architecture
 
 ![Architecture Diagram](./asset/img/streamlytics_architecture.png)
 
 1. **ETL with Airflow**: Extracts data from the TMDB API, processes it, and stores it in PostgreSQL & MongoDB.
 2. **Databases**:
-   - PostgreSQL: Stores processed analytical data.
+   - Supabase (PostgreSQL): Stores processed analytical data and statistics.
    - MongoDB: Holds raw JSON data for flexibility.
 3. **FastAPI Backend**: Provides RESTful API endpoints for data access.
 4. **Next.js Frontend**: Displays interactive visualizations and dashboards.
-5. **Statistical Analysis**: Runs daily and stores results for performance optimization.
+5. **Statistical Analysis**: Generates statistics and stores them in Supabase for API consumption.
 
-## 🚀 Tech Stack
+## Tech Stack
 
 ### Backend & ETL
 
-- ETL : [Apache Airflow](https://airflow.apache.org) 2.0+
-- API : [FastAPI](https://fastapi.tiangolo.com)
-- Databases : PostgreSQL 17.2+, MongoDB 8.0+
-- Python 3.9+
+- ETL: [Apache Airflow](https://airflow.apache.org) 3.0+
+- API: [FastAPI](https://fastapi.tiangolo.com)
+- Databases: [Supabase](https://supabase.com) (PostgreSQL), MongoDB 8.0+
+- Python 3.12+
 
 ### Frontend
 
-- NextJS
+- Next.js
 - TailwindCSS
 - Chart.js
 - Nivo
 
-## 📦 Installation
+## Installation
 
 ### Prerequisites
 
-```bash
-python >= 3.9
-postgresql >= 17.2
-mongodb >= 8.0
-node >= 18
-```
+- Python >= 3.12
+- MongoDB >= 8.0
+- Node >= 18
+- [uv](https://docs.astral.sh/uv/) (Python package manager)
+- Supabase account
+- TMDB API account ([get API key](https://developer.themoviedb.org/))
 
-- TMDB API account (obtain an API key from [TMDB](https://developer.themoviedb.org/))
-
-### Backend
+### API
 
 ```bash
-# Clone & Install
-git clone https://github.com/jass228/streamlytics.git
-cd streamlytics/backend
-pip install -r requirements.txt
+cd api
+uv init
+uv sync
+cp env.example .env  # Add your credentials
 ```
 
-#### Database
-
-1. PostgreSQL: Create a database named `streamlytics`.
-2. MongoDB: Ensure MongoDB is running.
-3. Add your TMDB API key to .env:
-
-#### Airflow
+### ETL
 
 ```bash
-export AIRFLOW_HOME=./airflow
-airflow db init
-airflow users create --username admin --password admin --role Admin --email admin@example.com
-airflow scheduler & airflow webserver
+cd etl
+uv init
+uv sync
+cp env.example .env  # Add your credentials
 ```
 
-Then activate and trigger the DAG in the Airflow UI (http://localhost:8080).
-
-## 💻 Usage
-
-1. Run the ETL Pipeline
-
-   - Open Airflow at http://localhost:8080
-   - Activate and run the etl_tmdb_netflix DAG
-
-2. Access Processed Data
-
-   - PostgreSQL: Use pgAdmin to explore stored data.
-   - MongoDB: Use Mongo Compass to inspect raw JSON data.
-
-3. Start the Backend API
-
-```bash
-cd backend/api
-uvicorn main:app --reload
-
-```
-
-- API Documentation: http://127.0.0.1:8000/docs
-
-4. Frontend
+### Frontend
 
 ```bash
 cd frontend
 npm install
+```
+
+## Usage
+
+### 1. Run the ETL Pipeline
+
+If you don't have Airflow installed, follow the [official installation guide](https://airflow.apache.org/docs/apache-airflow/stable/start.html).
+
+```bash
+# Set your Airflow home directory
+export AIRFLOW_HOME=/path/to/your/airflow
+
+# Set the DAGs folder path
+export AIRFLOW__CORE__DAGS_FOLDER=/path/to/streamlytics/etl/airflow/dags
+
+# Start Airflow
+airflow standalone
+
+# Access Airflow UI at http://localhost:8080
+# Activate and run the etl_tmdb_netflix DAG
+```
+
+### 2. Generate Statistics
+
+```bash
+cd etl/stats
+python main.py
+```
+
+This will:
+
+- Extract data from PostgreSQL
+- Generate statistical distributions and ratings
+- Save results to Supabase `stats` table
+
+### 3. Start the API
+
+```bash
+cd api
+uvicorn main:app --reload
+```
+
+- API Documentation: http://127.0.0.1:8000/docs
+
+### 4. Start the Frontend
+
+```bash
+cd frontend
 npm run dev
 ```
 
 - Visit: http://localhost:3000
 
-## 📂 Project Structure
+## Project Structure
 
 ```plaintext
 streamlytics/
-│── backend/                      # FastAPI Backend
-│   ├── airflow/                   # ETL pipeline with Apache Airflow
-│   ├── api/                       # FastAPI server
-│   ├── stats/                      # Data analysis
-│── frontend/                      # Next.js Frontend
-│── .env                            # Environment variables
-│── README.md                       # Project documentation
-
+├── api/                          # FastAPI Backend
+│   ├── config/                   # Database configuration
+│   ├── routers/                  # API routes
+│   ├── services/                 # Business logic
+│   └── main.py                   # Application entry point
+├── etl/                          # ETL Pipeline
+│   ├── airflow/                  # Airflow DAGs
+│   │   └── dags/
+│   │       └── netflix/          # TMDB extractors & loaders
+│   └── stats/                    # Statistical analysis
+│       └── utils/                # Data processing utilities
+├── frontend/                     # Next.js Frontend
+│   ├── components/               # React components
+│   └── pages/                    # Next.js pages
+└── README.md
 ```
 
-## 📊 Demo
+## Demo
 
-## ![image info](./asset/img/demo.jpg)
+![Demo Screenshot](./asset/img/demo.jpg)
 
-![image info](./asset/gif/demo.gif)
+![Demo GIF](./asset/gif/demo.gif)
 
-## 📜 License
+## License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE).
 
-## 📩 Contact & Support
+## Contact & Support
 
-👨‍💻 Author: Joseph A.  
-📌 Feel free to open an issue for questions or suggestions!
+Author: Joseph A.  
+Feel free to open an issue for questions or suggestions!

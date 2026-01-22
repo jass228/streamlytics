@@ -3,8 +3,9 @@
 Description: Router for handling statistical data related to movies and TV series
 """
 from fastapi import APIRouter, HTTPException
-#pylint: disable = E0401:import-error
 from services.statistics_service import StatisticsService
+
+#pylint: disable = E0401:import-error
 
 router = APIRouter()
 stats_service = StatisticsService()

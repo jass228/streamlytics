@@ -2,13 +2,17 @@
 @author: Joseph A.
 Description: This script defines the ETL process for the TMDB API and Netflix data.
 """
+import sys
+import os
 from datetime import datetime, timedelta
+
+# Add dags folder to path for imports
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from netflix.extractors import extract_netflix_data
 from netflix.loaders import load_to_postgres, load_to_mongo
-
 from airflow import DAG
-from airflow.operators.python import PythonOperator
+from airflow.providers.standard.operators.python import PythonOperator
 
 # DAG Arguments
 default_args = {
@@ -23,7 +27,7 @@ default_args = {
 dag = DAG(
     'etl_tmdb_netflix',
     default_args=default_args,
-    schedule_interval='@daily',
+    schedule='@daily',
     catchup=False,
 )
 

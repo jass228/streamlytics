@@ -6,9 +6,10 @@ and saving both daily and latest snapshots.
 import os
 from datetime import datetime
 import pandas as pd
-# My Libraries
 from utils.enrich import enrich_dataframe
 from config.config import engine
+
+# pylint: disable=C0103:invalid-name
 
 # Database extraction queries
 QUERY_MOVIE = 'SELECT * FROM movies;'
@@ -24,9 +25,7 @@ data_serie = data_serie.rename(columns={'first_air_date': 'release_date'})
 df_series = data_serie.copy()
 df_movies = data_movie.copy()
 
-
 # Enrich data with country information
-# Todo: Check if the tmdb_id already exists in the save file
 df_series = enrich_dataframe(df_series, 'tv')
 print("") # Visual separator
 df_movies = enrich_dataframe(df_movies, 'movie')

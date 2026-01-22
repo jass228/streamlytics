@@ -4,9 +4,12 @@ Description:  Main FastAPI application for the Streamlytics API, handling movies
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-#pylint: disable = E0401:import-error
+from fastapi.responses import JSONResponse
 from config.db import database
 from routers import movies, series, statistics
+
+#pylint: disable = W0718:broad-exception-caught
+#pylint: disable = E0401:import-error
 
 app = FastAPI(
     title="Streamlytics API",
@@ -29,19 +32,20 @@ async def startup():
     """
     try:
         await database.connect()
+        print("Database connected successfully")
     except Exception as e:
-        print(f"Failed to connect to database: {e}")
-        raise e
+        print(f"Warning: Failed to connect to database: {e}")
+        print("API will run without database - only statistics endpoints will work")
 
 @app.on_event('shutdown')
 async def shutdown():
     """Disconnect from the database when the application shuts down
     """
     try:
-        await database.disconnect()
+        if database.is_connected:
+            await database.disconnect()
     except Exception as e:
         print(f"Error during database disconnect: {e}")
-        raise e
 
 # Include routers
 app.include_router(movies.router, prefix="/api", tags=["Movies"])
@@ -56,4 +60,12 @@ def read_root():
     Returns:
         dict: A dictionary containing the welcome message
     """
-    return {"message": "Welcome to the Streamlytics API 🎬"}
+    return JSONResponse(
+        content={"message": "Welcome to the Streamlytics API 🎬"},
+        media_type="application/json; charset=utf-8"
+    )
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("main:app", host="0.0.0.0", port=5001, reload=True)

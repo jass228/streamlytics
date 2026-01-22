@@ -14,7 +14,7 @@ async def get_movies():
     """Get all movies from the database
 
     Returns:
-        list: A list of dictionnaries containing movies information.
+        list: A list of dictionaries containing movies information.
     """
     query = 'SELECT * FROM movies;'
     return await database.fetch_all(query)

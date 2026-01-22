@@ -10,8 +10,8 @@ from sqlalchemy import create_engine, MetaData
 # Configuration
 load_dotenv()
 
-# PostgreSQL
-POSTGRES_URL = os.getenv('POSTGRES_URL')
+# PostgreSQL - Use DATABASE_URL (Supabase) if available, fallback to POSTGRES_URL
+POSTGRES_URL = os.getenv('DATABASE_URL') or os.getenv('POSTGRES_URL')
 database = Database(POSTGRES_URL)
 engine = create_engine(POSTGRES_URL)
 metadata = MetaData()

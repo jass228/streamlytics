@@ -31,14 +31,14 @@ def run_script(script_name:str):
         bool: True if script execution was successful, False otherwise
     """
     try:
-        logging.info(f"Starting {script_name}")
-        result = subprocess.run([sys.executable, script_name], check=True, capture_output=True, text=True)
-        logging.info(f"Execution of {script_name} completed successfully")
+        logging.info("Starting %s", script_name)
+        subprocess.run([sys.executable, script_name], check=True, capture_output=True, text=True)
+        logging.info("Execution of %s completed successfully", script_name)
         return True
     except subprocess.CalledProcessError as e:
-        logging.error(f"Error when executing {script_name}: {e}")
-        logging.error(f"Stdout {e.stdout}")
-        logging.error(f"Stderr {e.stderr}")
+        logging.error("Error when executing %s: %s", script_name, e)
+        logging.error("Stdout %s", e.stdout)
+        logging.error("Stderr %s", e.stderr)
         return False
 
 def main():

@@ -21,11 +21,11 @@ def extract_netflix_data():
             'page': page
         }
 
-        # Movies
-        url = f'{TMDB_BASE_URL}/discover/movie'
-        LOGGER.info(f"🔄 Request for movies - Page {page}")
-
         try:
+            # Movies
+            url = f'{TMDB_BASE_URL}/discover/movie'
+            LOGGER.info(f"🔄 Request for movies - Page {page}")
+
             response = requests.get(url, params=params, timeout=10)
             if response.status_code != 200:
                 error_msg = f"❌ Error while getting movies - Page {page}: {response.status_code}"

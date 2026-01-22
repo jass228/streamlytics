@@ -7,7 +7,9 @@ import os
 from datetime import datetime
 import pandas as pd
 from utils.data_processing import count_split_data, explode_split_data
-from utils.save_data import save_json_data
+from utils.save_data import save_json_data, save_to_supabase
+
+# pylint: disable=C0103:invalid-name
 
 def get_distribution(df_series:pd.DataFrame, df_movies:pd.DataFrame, column_name:str):
     """Get distribution counts for a specific column across movies and TV series.
@@ -46,7 +48,8 @@ def year_distribution(df_series:pd.DataFrame, df_movies:pd.DataFrame, column_nam
         column_name (str): Name of the column containing year data
 
     Returns:
-        _type_: tuple: (movie_year_counts, series_year_counts) where each is a pd.Series of yearly counts
+        tuple: (movie_year_counts, series_year_counts) 
+        where each is a pd.Series of yearly counts
     """
     y_m_d = df_movies[column_name].value_counts().sort_index()
     y_s_d = df_series[column_name].value_counts().sort_index()
@@ -104,15 +107,18 @@ df_tv_copy = get_year(df_tv_copy)
 
 # Generate distributions and ratings
 # Distribution of media by country
-country_movies_distribution, country_series_distribution = get_distribution(df_tv, df_movie, 'country_code_3')
+country_movies_distribution, country_series_distribution = get_distribution(df_tv, df_movie,
+                                                                            'country_code_3')
 # Analysis of media genres
 genres_movies_distribution, genres_series_distribution = get_distribution(df_tv, df_movie, 'genre')
 # Media releases over time
 yearly_counts_movies, yearly_counts_series = year_distribution(df_tv_copy, df_movie_copy, 'year')
 # Average score by country
-country_avg_ratings_movies, country_avg_ratings_series = get_avg_ratings(df_tv_copy, df_movie_copy, 'country_name')
+country_avg_ratings_movies, country_avg_ratings_series = get_avg_ratings(df_tv_copy, df_movie_copy,
+                                                                        'country_name')
 # Average score by genres
-genres_avg_ratings_movies, genres_avg_ratings_series = get_avg_ratings(df_tv_copy, df_movie_copy, 'genre')
+genres_avg_ratings_movies, genres_avg_ratings_series = get_avg_ratings(df_tv_copy, df_movie_copy,
+                                                                    'genre')
 
 # Setup paths for saving data
 base_path = os.path.join("db", "api")
@@ -131,10 +137,14 @@ save_json_data(genres_movies_distribution, f"genres_movies_distribution_{current
 save_json_data(genres_series_distribution, f"genres_series_distribution_{current_date}", db_path)
 save_json_data(yearly_counts_movies, f"yearly_counts_movies_{current_date}", db_path)
 save_json_data(yearly_counts_series, f"yearly_counts_series_{current_date}", db_path)
-save_json_data(country_avg_ratings_movies, f"country_avg_ratings_movies_{current_date}", db_path, 'ratings')
-save_json_data(country_avg_ratings_series, f"country_avg_ratings_series_{current_date}", db_path, 'ratings')
-save_json_data(genres_avg_ratings_movies, f"genres_avg_ratings_movies_{current_date}", db_path, 'ratings')
-save_json_data(genres_avg_ratings_series, f"genres_avg_ratings_series_{current_date}", db_path, 'ratings')
+save_json_data(country_avg_ratings_movies, f"country_avg_ratings_movies_{current_date}",
+            db_path, 'ratings')
+save_json_data(country_avg_ratings_series, f"country_avg_ratings_series_{current_date}",
+            db_path, 'ratings')
+save_json_data(genres_avg_ratings_movies, f"genres_avg_ratings_movies_{current_date}",
+            db_path, 'ratings')
+save_json_data(genres_avg_ratings_series, f"genres_avg_ratings_series_{current_date}",
+            db_path, 'ratings')
 
 # Save latest versions
 save_json_data(country_movies_distribution, "country_movies_distribution_latest", latest_path)
@@ -143,7 +153,25 @@ save_json_data(genres_movies_distribution, "genres_movies_distribution_latest", 
 save_json_data(genres_series_distribution, "genres_series_distribution_latest", latest_path)
 save_json_data(yearly_counts_movies, "yearly_counts_movies_latest", latest_path)
 save_json_data(yearly_counts_series, "yearly_counts_series_latest", latest_path)
-save_json_data(country_avg_ratings_movies, "country_avg_ratings_movies_latest", latest_path, 'ratings')
-save_json_data(country_avg_ratings_series, "country_avg_ratings_series_latest", latest_path, 'ratings')
-save_json_data(genres_avg_ratings_movies, "genres_avg_ratings_movies_latest", latest_path, 'ratings')
-save_json_data(genres_avg_ratings_series, "genres_avg_ratings_series_latest", latest_path, 'ratings')
+save_json_data(country_avg_ratings_movies, "country_avg_ratings_movies_latest",
+            latest_path, 'ratings')
+save_json_data(country_avg_ratings_series, "country_avg_ratings_series_latest",
+            latest_path, 'ratings')
+save_json_data(genres_avg_ratings_movies, "genres_avg_ratings_movies_latest",
+            latest_path, 'ratings')
+save_json_data(genres_avg_ratings_series, "genres_avg_ratings_series_latest",
+            latest_path, 'ratings')
+
+# Save to Supabase
+print("Saving statistics to Supabase...")
+save_to_supabase(country_movies_distribution, 'country_distribution', 'movies')
+save_to_supabase(country_series_distribution, 'country_distribution', 'series')
+save_to_supabase(genres_movies_distribution, 'genre_distribution', 'movies')
+save_to_supabase(genres_series_distribution, 'genre_distribution', 'series')
+save_to_supabase(yearly_counts_movies, 'yearly_distribution', 'movies')
+save_to_supabase(yearly_counts_series, 'yearly_distribution', 'series')
+save_to_supabase(country_avg_ratings_movies, 'country_avg_ratings', 'movies', 'ratings')
+save_to_supabase(country_avg_ratings_series, 'country_avg_ratings', 'series', 'ratings')
+save_to_supabase(genres_avg_ratings_movies, 'genre_avg_ratings', 'movies', 'ratings')
+save_to_supabase(genres_avg_ratings_series, 'genre_avg_ratings', 'series', 'ratings')
+print("Statistics saved to Supabase successfully!")

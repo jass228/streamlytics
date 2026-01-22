@@ -1,0 +1,20 @@
+[project]
+name = "etl"
+version = "0.1.0"
+description = "ETL pipeline using Airflow to extract Netflix data from TMDB API"
+authors = [{ name = "Joseph A." }]
+license = { text = "MIT" }
+keywords = ["netflix", "etl", "airflow", "tmdb", "data-pipeline"]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "apache-airflow>=3.1.6",
+    "apache-airflow-providers-fab>=3.1.2",
+    "apache-airflow-providers-postgres>=6.5.2",
+    "graphviz>=0.21",
+    "pandas>=3.0.0",
+    "psycopg2>=2.9.11",
+    "pymongo>=4.16.0",
+    "python-dotenv>=1.2.1",
+    "requests>=2.32.5",
+]

@@ -5,11 +5,10 @@ Description: This script loads the extracted data into the databases.
 import json
 from functools import lru_cache
 import requests
+import psycopg2
 from pymongo import MongoClient, UpdateOne
-from airflow.providers.postgres.hooks.postgres import PostgresHook
-
 from .config import (TMDB_BASE_URL, TMDB_API_KEY, OUTPUT_DIR, LOGGER,
-                    POSTGRES_DB_NAME, MONGO_DB_HOST, MONGO_DB_NAME)
+                    DATABASE_URL, MONGO_DB_HOST, MONGO_DB_NAME)
 
 @lru_cache(maxsize=None) # Cache the result of the function
 def get_genres():
@@ -45,12 +44,11 @@ def get_genres():
 def load_to_postgres():
     """Load the data into the Postgres database
     """
-    LOGGER.info("🚚 Launch of the loading of the extracted data into the Postgres database")
+    LOGGER.info("Launch of the loading of the extracted data into the Postgres database")
 
     genres_data = get_genres() # Get the genres of movies and tv shows
 
-    pg_hook = PostgresHook(postgres_conn_id=POSTGRES_DB_NAME)
-    conn = pg_hook.get_conn()
+    conn = psycopg2.connect(DATABASE_URL)
     cursor = conn.cursor()
 
     try:

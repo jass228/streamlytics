@@ -1,10 +1,32 @@
+# Environment
 .env
 env/
-todelete.txt
-logs/
+.myenv
+.myenv-etl
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Node/Frontend
+node_modules/
+.next/
+
+# Airflow
 airflow.cfg
 airflow.db
 webserver_config.py
 airflow-webserver*
+logs/
+
+# Data
 db/
 *.ipynb
+
+# OS
+.DS_Store
+
+# Misc
+todelete.txt
+.claude/
