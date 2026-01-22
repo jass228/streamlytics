@@ -153,3 +153,39 @@ async def get_series_countries_ratings():
         return await stats_service.get_json_data("country_avg_ratings_series_latest")
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e)) from e
+
+@router.get("/ratings/movies/genres")
+async def get_movies_genres_ratings():
+    """Get the average ratings of movies by genre.
+
+    Raises:
+        HTTPException: If there is an error accessing or parsing the data file
+
+    Returns:
+        dict: Ratings data containing:
+            - data: Dictionary of genre ratings with mean and count
+            - total_ratings: Total number of ratings
+            - average_rating: Overall average rating
+    """
+    try:
+        return await stats_service.get_json_data("genres_avg_ratings_movies_latest")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
+
+@router.get("/ratings/series/genres")
+async def get_series_genres_ratings():
+    """Get the average ratings of TV series by genre.
+
+    Raises:
+        HTTPException: If there is an error accessing or parsing the data file
+
+    Returns:
+        dict: Ratings data containing:
+            - data: Dictionary of genre ratings with mean and count
+            - total_ratings: Total number of ratings
+            - average_rating: Overall average rating
+    """
+    try:
+        return await stats_service.get_json_data("genres_avg_ratings_series_latest")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e)) from e
