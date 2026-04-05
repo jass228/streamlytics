@@ -22,3 +22,11 @@ database = Database(
 )
 engine = create_engine(POSTGRES_URL)
 metadata = MetaData()
+
+
+async def get_database():
+    """Ensure database is connected (needed for serverless environments
+    where startup events may not fire)."""
+    if not database.is_connected:
+        await database.connect()
+    return database

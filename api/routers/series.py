@@ -4,7 +4,7 @@ Description: FastAPI router for handling series-related endpoints.
 """
 from fastapi import APIRouter, HTTPException
 #pylint: disable = E0401:import-error
-from config.db import database
+from config.db import get_database
 
 router = APIRouter()
 
@@ -16,8 +16,9 @@ async def get_series():
     Returns:
         list: A list of dictionaries containing series information.
     """
+    db = await get_database()
     query = 'SELECT * FROM series;'
-    return await database.fetch_all(query)
+    return await db.fetch_all(query)
 
 # Get a serie by tmdb_id
 @router.get('/series/{tmdb_id}')
@@ -30,8 +31,9 @@ async def get_serie(tmdb_id: int):
     Returns:
         dict: Series information.
     """
+    db = await get_database()
     query = 'SELECT * FROM series WHERE tmdb_id = :tmdb_id;'
-    serie = await database.fetch_one(query=query, values={'tmdb_id': tmdb_id})
+    serie = await db.fetch_one(query=query, values={'tmdb_id': tmdb_id})
     if not serie:
         raise HTTPException(status_code=404, detail='Serie not found.')
     return serie

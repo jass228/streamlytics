@@ -4,7 +4,7 @@ Description: FastAPI router for handling movies-related endpoints.
 """
 from fastapi import APIRouter,HTTPException
 #pylint: disable = E0401:import-error
-from config.db import database
+from config.db import get_database
 
 router = APIRouter()
 
@@ -16,8 +16,9 @@ async def get_movies():
     Returns:
         list: A list of dictionaries containing movies information.
     """
+    db = await get_database()
     query = 'SELECT * FROM movies;'
-    return await database.fetch_all(query)
+    return await db.fetch_all(query)
 
 # Get a movie by tmdb_id
 @router.get('/movies/{tmdb_id}')
@@ -30,8 +31,9 @@ async def get_movie(tmdb_id: int):
     Returns:
         dict: Movie information
     """
+    db = await get_database()
     query = 'SELECT * FROM movies WHERE tmdb_id = :tmdb_id;'
-    movie = await database.fetch_one(query=query, values={'tmdb_id': tmdb_id})
+    movie = await db.fetch_one(query=query, values={'tmdb_id': tmdb_id})
     if not movie:
         raise HTTPException(status_code=404, detail='Movie not found.')
     return movie

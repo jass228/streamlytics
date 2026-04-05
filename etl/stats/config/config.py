@@ -7,11 +7,12 @@ from dotenv import load_dotenv
 # Database
 from sqlalchemy import create_engine
 
-# Configs
-load_dotenv()
+# Configs - load .env from etl directory
+ETL_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+load_dotenv(os.path.join(ETL_DIR, '.env'))
 
-# PostgreSQL
-POSTGRES_URL = os.getenv('POSTGRES_URL')
+# PostgreSQL - Use DATABASE_URL (Neon) if available, fallback to POSTGRES_URL
+POSTGRES_URL = os.getenv('DATABASE_URL') or os.getenv('POSTGRES_URL')
 engine = create_engine(POSTGRES_URL)
 
 # TMDB API
