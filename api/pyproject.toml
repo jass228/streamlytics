@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "FastAPI backend for serving Netflix catalogue statistics and media data"
 authors = [{ name = "Joseph A." }]
 license = { text = "MIT" }
-keywords = ["netflix", "fastapi", "api", "statistics", "supabase"]
+keywords = ["netflix", "fastapi", "api", "statistics", "neon", "postgresql"]
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [

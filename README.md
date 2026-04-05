@@ -32,11 +32,11 @@ This project aims to provide rich analytical insights into the films and series 
 
 1. **ETL with Airflow**: Extracts data from the TMDB API, processes it, and stores it in PostgreSQL & MongoDB.
 2. **Databases**:
-   - Supabase (PostgreSQL): Stores processed analytical data and statistics.
+   - Neon (PostgreSQL): Stores processed analytical data and statistics.
    - MongoDB: Holds raw JSON data for flexibility.
 3. **FastAPI Backend**: Provides RESTful API endpoints for data access.
 4. **Next.js Frontend**: Displays interactive visualizations and dashboards.
-5. **Statistical Analysis**: Generates statistics and stores them in Supabase for API consumption.
+5. **Statistical Analysis**: Generates statistics and stores them in PostgreSQL for API consumption.
 
 ## Tech Stack
 
@@ -44,7 +44,7 @@ This project aims to provide rich analytical insights into the films and series 
 
 - ETL: [Apache Airflow](https://airflow.apache.org) 3.0+
 - API: [FastAPI](https://fastapi.tiangolo.com)
-- Databases: [Supabase](https://supabase.com) (PostgreSQL), MongoDB 8.0+
+- Databases: [Neon](https://neon.tech) (PostgreSQL), MongoDB 8.0+
 - Python 3.12+
 
 ### Frontend
@@ -62,7 +62,7 @@ This project aims to provide rich analytical insights into the films and series 
 - MongoDB >= 8.0
 - Node >= 18
 - [uv](https://docs.astral.sh/uv/) (Python package manager)
-- Supabase account
+- Neon account
 - TMDB API account ([get API key](https://developer.themoviedb.org/))
 
 ### API
@@ -121,7 +121,7 @@ This will:
 
 - Extract data from PostgreSQL
 - Generate statistical distributions and ratings
-- Save results to Supabase `stats` table
+- Save results to PostgreSQL `stats` table
 
 ### 3. Start the API
 
