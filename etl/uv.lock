@@ -213,26 +213,54 @@ wheels = [
 name = "apache-airflow-providers-fab"
 version = "3.1.2"
 source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version >= '3.14' and sys_platform == 'win32'",
+    "python_full_version >= '3.14' and sys_platform == 'emscripten'",
+    "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+    "python_full_version == '3.13.*' and sys_platform == 'win32'",
+    "python_full_version == '3.13.*' and sys_platform == 'emscripten'",
+    "python_full_version == '3.13.*' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+]
 dependencies = [
-    { name = "apache-airflow" },
-    { name = "apache-airflow-providers-common-compat" },
+    { name = "apache-airflow", marker = "python_full_version >= '3.13'" },
+    { name = "apache-airflow-providers-common-compat", marker = "python_full_version >= '3.13'" },
+    { name = "flask-limiter", marker = "python_full_version >= '3.13'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/a6/fa/bdeec721279ea806afc921fe27d19d59d59530653bd29d78a65bb0f3957c/apache_airflow_providers_fab-3.1.2.tar.gz", hash = "sha256:224d6306c5e15d647796e00b1d45263d8e3f0adf2ee343b4a095f64aaa98ce9d", size = 751800, upload-time = "2026-01-17T10:48:41.174Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/42/8a/deafaaf341d6b996c687ef4e3882ce2650109df508d1ed652dc30649e3d1/apache_airflow_providers_fab-3.1.2-py3-none-any.whl", hash = "sha256:e9d07cc5d576aa0afddf71a8d60390638c91290e5fa95aeba9e2156f32760704", size = 628725, upload-time = "2026-01-17T10:46:48.603Z" },
+]
+
+[[package]]
+name = "apache-airflow-providers-fab"
+version = "3.6.0"
+source = { registry = "https://pypi.org/simple" }
+resolution-markers = [
+    "python_full_version < '3.13' and sys_platform == 'win32'",
+    "python_full_version < '3.13' and sys_platform == 'emscripten'",
+    "python_full_version < '3.13' and sys_platform != 'emscripten' and sys_platform != 'win32'",
+]
+dependencies = [
+    { name = "apache-airflow", marker = "python_full_version < '3.13'" },
+    { name = "apache-airflow-providers-common-compat", marker = "python_full_version < '3.13'" },
     { name = "blinker", marker = "python_full_version < '3.13'" },
-    { name = "connexion", extra = ["flask"], marker = "python_full_version < '3.13'" },
+    { name = "cachetools", marker = "python_full_version < '3.13'" },
     { name = "flask", version = "2.2.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
     { name = "flask-appbuilder", marker = "python_full_version < '3.13'" },
-    { name = "flask-limiter" },
+    { name = "flask-limiter", marker = "python_full_version < '3.13'" },
     { name = "flask-login", marker = "python_full_version < '3.13'" },
     { name = "flask-session", marker = "python_full_version < '3.13'" },
     { name = "flask-sqlalchemy", marker = "python_full_version < '3.13'" },
     { name = "flask-wtf", marker = "python_full_version < '3.13'" },
     { name = "jmespath", marker = "python_full_version < '3.13'" },
+    { name = "marshmallow", marker = "python_full_version < '3.13'" },
     { name = "msgpack", marker = "python_full_version < '3.13'" },
-    { name = "werkzeug", version = "2.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "werkzeug", marker = "python_full_version < '3.13'" },
     { name = "wtforms", marker = "python_full_version < '3.13'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a6/fa/bdeec721279ea806afc921fe27d19d59d59530653bd29d78a65bb0f3957c/apache_airflow_providers_fab-3.1.2.tar.gz", hash = "sha256:224d6306c5e15d647796e00b1d45263d8e3f0adf2ee343b4a095f64aaa98ce9d", size = 751800, upload-time = "2026-01-17T10:48:41.174Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c1/ea/465c13773ed8c4701d4b7cf76bccd42e4dc87c276806c1de0a90c460b2ac/apache_airflow_providers_fab-3.6.0.tar.gz", hash = "sha256:8fa5ef129aff33f958e89a7c2c09d243281761d6c24eda531726a13b97cbe4b3", size = 823088, upload-time = "2026-03-28T10:59:26.211Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/42/8a/deafaaf341d6b996c687ef4e3882ce2650109df508d1ed652dc30649e3d1/apache_airflow_providers_fab-3.1.2-py3-none-any.whl", hash = "sha256:e9d07cc5d576aa0afddf71a8d60390638c91290e5fa95aeba9e2156f32760704", size = 628725, upload-time = "2026-01-17T10:46:48.603Z" },
+    { url = "https://files.pythonhosted.org/packages/4b/1b/65fc55a88a3422f55864b0ee571d33576077bb5fe844a867e8a735eecc44/apache_airflow_providers_fab-3.6.0-py3-none-any.whl", hash = "sha256:a06c6e22a96cd68dd404abb13ead0729ccfabf36a7d71d38d5bdc1f65812d9e3", size = 600414, upload-time = "2026-03-28T10:57:33.95Z" },
 ]
 
 [[package]]
@@ -419,6 +447,15 @@ wheels = [
 ]
 
 [[package]]
+name = "cachetools"
+version = "7.0.5"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/af/dd/57fe3fdb6e65b25a5987fd2cdc7e22db0aef508b91634d2e57d22928d41b/cachetools-7.0.5.tar.gz", hash = "sha256:0cd042c24377200c1dcd225f8b7b12b0ca53cc2c961b43757e774ebe190fd990", size = 37367, upload-time = "2026-03-09T20:51:29.451Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/06/f3/39cf3367b8107baa44f861dc802cbf16263c945b62d8265d36034fc07bea/cachetools-7.0.5-py3-none-any.whl", hash = "sha256:46bc8ebefbe485407621d0a4264b23c080cedd913921bad7ac3ed2f26c183114", size = 13918, upload-time = "2026-03-09T20:51:27.33Z" },
+]
+
+[[package]]
 name = "cadwyn"
 version = "5.4.6"
 source = { registry = "https://pypi.org/simple" }
@@ -571,19 +608,6 @@ wheels = [
 ]
 
 [[package]]
-name = "clickclick"
-version = "20.10.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "click", marker = "python_full_version < '3.13'" },
-    { name = "pyyaml", marker = "python_full_version < '3.13'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/c6/19/f91d85941b79964d569a3729bf9f8b7f85ab47240248e77b7c0c8ed6ecc3/clickclick-20.10.2.tar.gz", hash = "sha256:4efb13e62353e34c5eef7ed6582c4920b418d7dedc86d819e22ee089ba01802c", size = 9914, upload-time = "2020-10-03T13:36:47.966Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/7a/7e/c08007d3fb2bbefb430437a3573373590abedc03566b785d7d6763b22480/clickclick-20.10.2-py2.py3-none-any.whl", hash = "sha256:c8f33e6d9ec83f68416dd2136a7950125bd256ec39ccc9a85c6e280a16be2bb5", size = 7368, upload-time = "2020-10-03T13:36:49.842Z" },
-]
-
-[[package]]
 name = "colorama"
 version = "0.4.6"
 source = { registry = "https://pypi.org/simple" }
@@ -602,32 +626,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/a2/61/f083b5ac52e505dfc1c624eafbf8c7589a0d7f32daa398d2e7590efa5fda/colorlog-6.10.1.tar.gz", hash = "sha256:eb4ae5cb65fe7fec7773c2306061a8e63e02efc2c72eba9d27b0fa23c94f1321", size = 17162, upload-time = "2025-10-16T16:14:11.978Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/6d/c1/e419ef3723a074172b68aaa89c9f3de486ed4c2399e2dbd8113a4fdcaf9e/colorlog-6.10.1-py3-none-any.whl", hash = "sha256:2d7e8348291948af66122cff006c9f8da6255d224e7cf8e37d8de2df3bad8c9c", size = 11743, upload-time = "2025-10-16T16:14:10.512Z" },
-]
-
-[[package]]
-name = "connexion"
-version = "2.14.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "clickclick", marker = "python_full_version < '3.13'" },
-    { name = "flask", version = "2.2.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
-    { name = "inflection", marker = "python_full_version < '3.13'" },
-    { name = "itsdangerous", marker = "python_full_version < '3.13'" },
-    { name = "jsonschema", marker = "python_full_version < '3.13'" },
-    { name = "packaging", marker = "python_full_version < '3.13'" },
-    { name = "pyyaml", marker = "python_full_version < '3.13'" },
-    { name = "requests", marker = "python_full_version < '3.13'" },
-    { name = "werkzeug", version = "2.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/8f/8b/c1d8a2e9327787354e936184f424b1ae96e526a0dad031bbc218c9dcaf35/connexion-2.14.2.tar.gz", hash = "sha256:dbc06f52ebeebcf045c9904d570f24377e8bbd5a6521caef15a06f634cf85646", size = 82819, upload-time = "2023-01-25T10:05:14.261Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ed/e6/851b3d7688115b176eb5d3e45055d1dc5b2b91708007064a38b0e93813ed/connexion-2.14.2-py2.py3-none-any.whl", hash = "sha256:a73b96a0e07b16979a42cde7c7e26afe8548099e352cf350f80c57185e0e0b36", size = 95127, upload-time = "2023-01-25T10:05:12.06Z" },
-]
-
-[package.optional-dependencies]
-flask = [
-    { name = "flask", version = "2.2.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
-    { name = "itsdangerous", marker = "python_full_version < '3.13'" },
 ]
 
 [[package]]
@@ -760,14 +758,18 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "apache-airflow" },
-    { name = "apache-airflow-providers-fab" },
+    { name = "apache-airflow-providers-fab", version = "3.1.2", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "apache-airflow-providers-fab", version = "3.6.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
     { name = "apache-airflow-providers-postgres" },
     { name = "graphviz" },
     { name = "pandas" },
     { name = "psycopg2" },
+    { name = "pycountry" },
     { name = "pymongo" },
     { name = "python-dotenv" },
     { name = "requests" },
+    { name = "tqdm" },
+    { name = "werkzeug" },
 ]
 
 [package.metadata]
@@ -778,9 +780,12 @@ requires-dist = [
     { name = "graphviz", specifier = ">=0.21" },
     { name = "pandas", specifier = ">=3.0.0" },
     { name = "psycopg2", specifier = ">=2.9.11" },
+    { name = "pycountry", specifier = ">=26.2.16" },
     { name = "pymongo", specifier = ">=4.16.0" },
     { name = "python-dotenv", specifier = ">=1.2.1" },
     { name = "requests", specifier = ">=2.32.5" },
+    { name = "tqdm", specifier = ">=4.67.3" },
+    { name = "werkzeug", specifier = ">=3.1.6" },
 ]
 
 [[package]]
@@ -839,7 +844,7 @@ dependencies = [
     { name = "click", marker = "python_full_version < '3.13'" },
     { name = "itsdangerous", marker = "python_full_version < '3.13'" },
     { name = "jinja2", marker = "python_full_version < '3.13'" },
-    { name = "werkzeug", version = "2.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "werkzeug", marker = "python_full_version < '3.13'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/5f/76/a4d2c4436dda4b0a12c71e075c508ea7988a1066b06a575f6afe4fecc023/Flask-2.2.5.tar.gz", hash = "sha256:edee9b0a7ff26621bd5a8c10ff484ae28737a2410d99b0bb9a6850c7fb977aa0", size = 697814, upload-time = "2023-05-02T14:42:36.742Z" }
 wheels = [
@@ -864,7 +869,7 @@ dependencies = [
     { name = "itsdangerous", marker = "python_full_version >= '3.13'" },
     { name = "jinja2", marker = "python_full_version >= '3.13'" },
     { name = "markupsafe", marker = "python_full_version >= '3.13'" },
-    { name = "werkzeug", version = "3.1.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13'" },
+    { name = "werkzeug", marker = "python_full_version >= '3.13'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/dc/6d/cfe3c0fcc5e477df242b98bfe186a4c34357b4847e87ecaef04507332dab/flask-3.1.2.tar.gz", hash = "sha256:bf656c15c80190ed628ad08cdfd3aaa35beb087855e2f494910aa3774cc4fd87", size = 720160, upload-time = "2025-08-19T21:03:21.205Z" }
 wheels = [
@@ -873,7 +878,7 @@ wheels = [
 
 [[package]]
 name = "flask-appbuilder"
-version = "5.0.1"
+version = "5.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "apispec", extra = ["yaml"], marker = "python_full_version < '3.13'" },
@@ -895,12 +900,12 @@ dependencies = [
     { name = "python-dateutil", marker = "python_full_version < '3.13'" },
     { name = "sqlalchemy", marker = "python_full_version < '3.13'" },
     { name = "sqlalchemy-utils", marker = "python_full_version < '3.13'" },
-    { name = "werkzeug", version = "2.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "werkzeug", marker = "python_full_version < '3.13'" },
     { name = "wtforms", marker = "python_full_version < '3.13'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/f6/b6/3ad64dee60660b5080de526a85743a198d9195adbfed123ab4eb33eef72d/Flask-AppBuilder-5.0.1.tar.gz", hash = "sha256:fdcdc7c1bc2166d45b4137debc8dff3ea90f9cc135006426c1e66d85ff0d3387", size = 7050579, upload-time = "2025-10-10T11:55:18.326Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/52/ca/a617a4b39d6c1336a3dbc0b2e2ee24c2cbd3183174620de965affa355741/flask_appbuilder-5.2.0.tar.gz", hash = "sha256:dd153b4649f0cd127aeed056a409141299c6f491ecbe297960b37ace07117e72", size = 7060586, upload-time = "2026-03-02T14:42:08.376Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/20/a1/42050b13b9081bc394b6ec77010b49a65c29058d5dcc50e23ff24cf9d1bf/Flask_AppBuilder-5.0.1-py3-none-any.whl", hash = "sha256:d372c7b0f0fbdefc363c77f6aa4c1b82acbe68f75394281e7a3855b7337f7f17", size = 2198812, upload-time = "2025-10-10T11:55:14.056Z" },
+    { url = "https://files.pythonhosted.org/packages/2f/33/c3c98b590f644fe80298e368401a2ad920c153210bc1ebb4cb60d6ed6478/flask_appbuilder-5.2.0-py3-none-any.whl", hash = "sha256:054b9372e2f3785c8b0012bac744a807c5740bf4dff1ed207473a696a6321ce8", size = 2216573, upload-time = "2026-03-02T14:42:05.513Z" },
 ]
 
 [[package]]
@@ -925,7 +930,7 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "flask", version = "2.2.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
     { name = "pyjwt", marker = "python_full_version < '3.13'" },
-    { name = "werkzeug", version = "2.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "werkzeug", marker = "python_full_version < '3.13'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/51/16/96b101f18cba17ecce3225ab07bc4c8f23e6befd8552dbbed87482e7c7fb/flask_jwt_extended-4.7.1.tar.gz", hash = "sha256:8085d6757505b6f3291a2638c84d207e8f0ad0de662d1f46aa2f77e658a0c976", size = 34411, upload-time = "2024-11-20T23:44:41.044Z" }
 wheels = [
@@ -954,7 +959,7 @@ version = "0.6.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "flask", version = "2.2.5", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
-    { name = "werkzeug", version = "2.2.3", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version < '3.13'" },
+    { name = "werkzeug", marker = "python_full_version < '3.13'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/c3/6e/2f4e13e373bb49e68c02c51ceadd22d172715a06716f9299d9df01b6ddb2/Flask-Login-0.6.3.tar.gz", hash = "sha256:5e23d14a607ef12806c699590b89d0f0e0d67baeec599d75947bf9c147330333", size = 48834, upload-time = "2023-10-30T14:53:21.151Z" }
 wheels = [
@@ -1211,15 +1216,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/f3/49/3b30cad09e7771a4982d9975a8cbf64f00d4a1ececb53297f1d9a7be1b10/importlib_metadata-8.7.1.tar.gz", hash = "sha256:49fef1ae6440c182052f407c8d34a68f72efc36db9ca90dc0113398f2fdde8bb", size = 57107, upload-time = "2025-12-21T10:00:19.278Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/fa/5e/f8e9a1d23b9c20a551a8a02ea3637b4642e22c2626e3a13a9a29cdea99eb/importlib_metadata-8.7.1-py3-none-any.whl", hash = "sha256:5a1f80bf1daa489495071efbb095d75a634cf28a8bc299581244063b53176151", size = 27865, upload-time = "2025-12-21T10:00:18.329Z" },
-]
-
-[[package]]
-name = "inflection"
-version = "0.5.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/e1/7e/691d061b7329bc8d54edbf0ec22fbfb2afe61facb681f9aaa9bff7a27d04/inflection-0.5.1.tar.gz", hash = "sha256:1a29730d366e996aaacffb2f1f1cb9593dc38e2ddd30c91250c6dde09ea9b417", size = 15091, upload-time = "2020-08-22T08:16:29.139Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/59/91/aa6bde563e0085a02a435aa99b49ef75b0a4b062635e606dab23ce18d720/inflection-0.5.1-py2.py3-none-any.whl", hash = "sha256:f38b2b640938a4f35ade69ac3d053042959b62a0f1076a5bbaa1b9526605a8a2", size = 9454, upload-time = "2020-08-22T08:16:27.816Z" },
 ]
 
 [[package]]
@@ -2045,6 +2041,15 @@ wheels = [
 ]
 
 [[package]]
+name = "pycountry"
+version = "26.2.16"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/de/1d/061b9e7a48b85cfd69f33c33d2ef784a531c359399ad764243399673c8f5/pycountry-26.2.16.tar.gz", hash = "sha256:5b6027d453fcd6060112b951dd010f01f168b51b4bf8a1f1fc8c95c8d94a0801", size = 7711342, upload-time = "2026-02-17T03:42:52.367Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9c/42/7703bd45b62fecd44cd7d3495423097e2f7d28bc2e99e7c1af68892ab157/pycountry-26.2.16-py3-none-any.whl", hash = "sha256:115c4baf7cceaa30f59a4694d79483c9167dbce7a9de4d3d571c5f3ea77c305a", size = 8044600, upload-time = "2026-02-17T03:42:49.777Z" },
+]
+
+[[package]]
 name = "pycparser"
 version = "3.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2735,6 +2740,18 @@ wheels = [
 ]
 
 [[package]]
+name = "tqdm"
+version = "4.67.3"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "colorama", marker = "sys_platform == 'win32'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/09/a9/6ba95a270c6f1fbcd8dac228323f2777d886cb206987444e4bce66338dd4/tqdm-4.67.3.tar.gz", hash = "sha256:7d825f03f89244ef73f1d4ce193cb1774a8179fd96f31d7e1dcde62092b960bb", size = 169598, upload-time = "2026-02-03T17:35:53.048Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/16/e1/3079a9ff9b8e11b846c6ac5c8b5bfb7ff225eee721825310c91b3b50304f/tqdm-4.67.3-py3-none-any.whl", hash = "sha256:ee1e4c0e59148062281c49d80b25b67771a127c85fc9676d3be5f243206826bf", size = 78374, upload-time = "2026-02-03T17:35:50.982Z" },
+]
+
+[[package]]
 name = "typer"
 version = "0.21.1"
 source = { registry = "https://pypi.org/simple" }
@@ -2991,39 +3008,14 @@ wheels = [
 
 [[package]]
 name = "werkzeug"
-version = "2.2.3"
+version = "3.1.8"
 source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version < '3.13' and sys_platform == 'win32'",
-    "python_full_version < '3.13' and sys_platform == 'emscripten'",
-    "python_full_version < '3.13' and sys_platform != 'emscripten' and sys_platform != 'win32'",
-]
 dependencies = [
-    { name = "markupsafe", marker = "python_full_version < '3.13'" },
+    { name = "markupsafe" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/02/3c/baaebf3235c87d61d6593467056d5a8fba7c75ac838b8d100a5e64eba7a0/Werkzeug-2.2.3.tar.gz", hash = "sha256:2e1ccc9417d4da358b9de6f174e3ac094391ea1d4fbef2d667865d819dfd0afe", size = 845884, upload-time = "2023-02-14T17:18:44.177Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/dd/b2/381be8cfdee792dd117872481b6e378f85c957dd7c5bca38897b08f765fd/werkzeug-3.1.8.tar.gz", hash = "sha256:9bad61a4268dac112f1c5cd4630a56ede601b6ed420300677a869083d70a4c44", size = 875852, upload-time = "2026-04-02T18:49:14.268Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f6/f8/9da63c1617ae2a1dec2fbf6412f3a0cfe9d4ce029eccbda6e1e4258ca45f/Werkzeug-2.2.3-py3-none-any.whl", hash = "sha256:56433961bc1f12533306c624f3be5e744389ac61d722175d543e1751285da612", size = 233551, upload-time = "2023-02-14T17:18:42.614Z" },
-]
-
-[[package]]
-name = "werkzeug"
-version = "3.1.5"
-source = { registry = "https://pypi.org/simple" }
-resolution-markers = [
-    "python_full_version >= '3.14' and sys_platform == 'win32'",
-    "python_full_version >= '3.14' and sys_platform == 'emscripten'",
-    "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32'",
-    "python_full_version == '3.13.*' and sys_platform == 'win32'",
-    "python_full_version == '3.13.*' and sys_platform == 'emscripten'",
-    "python_full_version == '3.13.*' and sys_platform != 'emscripten' and sys_platform != 'win32'",
-]
-dependencies = [
-    { name = "markupsafe", marker = "python_full_version >= '3.13'" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/5a/70/1469ef1d3542ae7c2c7b72bd5e3a4e6ee69d7978fa8a3af05a38eca5becf/werkzeug-3.1.5.tar.gz", hash = "sha256:6a548b0e88955dd07ccb25539d7d0cc97417ee9e179677d22c7041c8f078ce67", size = 864754, upload-time = "2026-01-08T17:49:23.247Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/ad/e4/8d97cca767bcc1be76d16fb76951608305561c6e056811587f36cb1316a8/werkzeug-3.1.5-py3-none-any.whl", hash = "sha256:5111e36e91086ece91f93268bb39b4a35c1e6f1feac762c9c822ded0a4e322dc", size = 225025, upload-time = "2026-01-08T17:49:21.859Z" },
+    { url = "https://files.pythonhosted.org/packages/93/8c/2e650f2afeb7ee576912636c23ddb621c91ac6a98e66dc8d29c3c69446e1/werkzeug-3.1.8-py3-none-any.whl", hash = "sha256:63a77fb8892bf28ebc3178683445222aa500e48ebad5ec77b0ad80f8726b1f50", size = 226459, upload-time = "2026-04-02T18:49:12.72Z" },
 ]
 
 [[package]]
