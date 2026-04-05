@@ -1,6 +1,6 @@
 """
 @author: Joseph A.
-Description: Utility functions for saving statistical data to JSON files and Supabase
+Description: Utility functions for saving statistical data to JSON files and PostgreSQL
 """
 import os
 import json
@@ -51,8 +51,8 @@ def save_json_data(data, filename: str, base_path: str, data_type: str = 'distri
         json.dump(json_data, f, ensure_ascii=False, indent=2)
 
 
-def save_to_supabase(data, stat_type: str, media_type: str, data_type: str = 'distribution'):
-    """Save statistical data to Supabase stats table.
+def save_to_postgres(data, stat_type: str, media_type: str, data_type: str = 'distribution'):
+    """Save statistical data to PostgreSQL stats table.
 
     Args:
         data (Union[pd.Series, pd.DataFrame]): Data to save

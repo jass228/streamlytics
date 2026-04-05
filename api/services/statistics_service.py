@@ -1,6 +1,6 @@
 """
 @author: Joseph A.
-Description: Service class for handling statistical data operations from Supabase
+Description: Service class for handling statistical data operations from PostgreSQL
 """
 import json
 import dataclasses
@@ -23,11 +23,11 @@ STAT_MAPPING = {
 
 @dataclasses.dataclass
 class StatisticsService:
-    """Service class that provides methods to read statistical data from Supabase.
+    """Service class that provides methods to read statistical data from PostgreSQL.
     """
 
     async def get_json_data(self, filename: str):
-        """Read and return statistical data from Supabase.
+        """Read and return statistical data from PostgreSQL.
 
         Args:
             filename (str): Legacy filename pattern (for backward compatibility)

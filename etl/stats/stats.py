@@ -7,7 +7,7 @@ import os
 from datetime import datetime
 import pandas as pd
 from utils.data_processing import count_split_data, explode_split_data
-from utils.save_data import save_json_data, save_to_supabase
+from utils.save_data import save_json_data, save_to_postgres
 
 # pylint: disable=C0103:invalid-name
 
@@ -162,16 +162,16 @@ save_json_data(genres_avg_ratings_movies, "genres_avg_ratings_movies_latest",
 save_json_data(genres_avg_ratings_series, "genres_avg_ratings_series_latest",
             latest_path, 'ratings')
 
-# Save to Supabase
-print("Saving statistics to Supabase...")
-save_to_supabase(country_movies_distribution, 'country_distribution', 'movies')
-save_to_supabase(country_series_distribution, 'country_distribution', 'series')
-save_to_supabase(genres_movies_distribution, 'genre_distribution', 'movies')
-save_to_supabase(genres_series_distribution, 'genre_distribution', 'series')
-save_to_supabase(yearly_counts_movies, 'yearly_distribution', 'movies')
-save_to_supabase(yearly_counts_series, 'yearly_distribution', 'series')
-save_to_supabase(country_avg_ratings_movies, 'country_avg_ratings', 'movies', 'ratings')
-save_to_supabase(country_avg_ratings_series, 'country_avg_ratings', 'series', 'ratings')
-save_to_supabase(genres_avg_ratings_movies, 'genre_avg_ratings', 'movies', 'ratings')
-save_to_supabase(genres_avg_ratings_series, 'genre_avg_ratings', 'series', 'ratings')
-print("Statistics saved to Supabase successfully!")
+# Save to PostgreSQL
+print("Saving statistics to PostgreSQL...")
+save_to_postgres(country_movies_distribution, 'country_distribution', 'movies')
+save_to_postgres(country_series_distribution, 'country_distribution', 'series')
+save_to_postgres(genres_movies_distribution, 'genre_distribution', 'movies')
+save_to_postgres(genres_series_distribution, 'genre_distribution', 'series')
+save_to_postgres(yearly_counts_movies, 'yearly_distribution', 'movies')
+save_to_postgres(yearly_counts_series, 'yearly_distribution', 'series')
+save_to_postgres(country_avg_ratings_movies, 'country_avg_ratings', 'movies', 'ratings')
+save_to_postgres(country_avg_ratings_series, 'country_avg_ratings', 'series', 'ratings')
+save_to_postgres(genres_avg_ratings_movies, 'genre_avg_ratings', 'movies', 'ratings')
+save_to_postgres(genres_avg_ratings_series, 'genre_avg_ratings', 'series', 'ratings')
+print("Statistics saved to PostgreSQL successfully!")
